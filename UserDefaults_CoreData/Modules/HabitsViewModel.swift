@@ -9,5 +9,18 @@ import Foundation
 
 final class HabitsViewModel {
     
+    private let coreData = CoreDataManager.shared
+    private(set) var habits: [Habit] = []
     
+    var onHabitsUpdated: (() -> ())?
+    
+    func fetchHabits() {
+        habits = coreData.fetchHabits()
+        onHabitsUpdated?()
+    }
+    
+    func addHabit(title: String) {
+        coreData.addHabit(title: title)
+        fetchHabits()
+    }
 }
